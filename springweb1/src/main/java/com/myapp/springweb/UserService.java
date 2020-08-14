@@ -33,12 +33,31 @@ public class UserService {
 		
 	}
 	public boolean getUser(String user) {
-		if(hm.containsKey(user)) {
-			System.out.println(hm.get(user));
+		/*
+		 * if(hm.containsKey(user)) { System.out.println(hm.get(user)); return true; }
+		 * System.out.println("user not found");
+		 */
+		System.out.println(userDao.findById(user));
+		return true;
+	}
+
+	public boolean deleteUser(String uname) {
+		/*
+		 * if(hm.containsKey(uname)) { hm.remove(uname); return true; }
+		 * System.out.println("user not found");
+		 */
+		userDao.deleteById(uname);
+		return true;
+	}
+	
+	public boolean updateUser(String uname,ArrayList<User> usr) {
+		if(hm.containsKey(uname)) {
+			hm.put(uname, usr);
 			return true;
 		}
 		System.out.println("user not found");
 		return false;
+		
 	}
 	
 	

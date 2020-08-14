@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +65,30 @@ public class MainAppController {
 			return "user found";
 		}
 		return "user not found";
+	}
+	@DeleteMapping("/delname/{uname}")
+	@ResponseBody
+	public String delUser(@PathVariable("uname")String uname ) {
+		boolean found=userService.deleteUser(uname);
+		if(found) {
+			return "user deleted";
+		}
+		return "not found";
+	}
+	@PutMapping("/updateuser/{uname}")
+	@ResponseBody
+	public String updateUser(@PathVariable("uname")String name,@RequestParam("uname")String uname,@RequestParam("pass")String pass,@RequestParam("email")String email,@RequestParam("city")String city ) {
+         User usr= new User(uname,pass, email, city);
+		
+		ArrayList<User> list= new ArrayList<>();
+		
+		list.add(usr);
+		
+		boolean found=userService.updateUser(name,list);
+		if(found) {
+			return "user updated";
+		}
+		return "not found";
 	}
 
 }
